@@ -17,14 +17,8 @@
 }
 
 @keyframes drop {
-    from {
-        top: -10px;
-    }
-
-    to {
-        top: 110vh;
-    }
-    
+    from    {  top: -10px; }
+    100%     { top: 110vh; }
 }
 
 /* player styles */
@@ -58,11 +52,6 @@
 }
 
 @keyframes fire {
-    from {
-        display: block;
-    }
-
-    to {
-        transform: translate(0%, -100vh);
-    }
+    from { display: block; }
+    100% { transform: translate(0%, -100vh); }
 }

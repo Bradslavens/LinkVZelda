@@ -17,33 +17,45 @@ function spawnEnemy(){
 
 // spawn enemies 
 let enemyIntervalId = 0
-function spawnEnemies(){ 
+let compareObjsIntervalId = 0
+function start(){ 
     startButton.setAttribute("disabled", "")
     console.log("triggered")
     enemyIntervalId = setInterval(spawnEnemy, SPAWN_RATE)
     document.addEventListener("keydown", movePlayer)
+    compareObjsIntervalId =  setInterval(compareGameObjectLocations, 3000);
 }
 
 // // stop spawning enemies
-function stopSpawning(){ 
+function stop(){ 
     clearInterval(enemyIntervalId)
+    clearInterval(compareObjsIntervalId)
     document.removeEventListener("keydown", movePlayer)
     startButton.removeAttribute("disabled")
 }
 
-// const bullet = document.getElementById("bullet")
-
-
 // check for collision 
-// const intervalId =  setInterval(() => {
-//     const enemy1 = document.getElementsByClassName("enemy")
-//     console.log(bullet.offsetTop + " bullet" + enemy1[0].offsetTop + " enemy")
-//     if(enemy1[0].offsetTop == bullet.offsetTop ) {
-//         console.log("HIT...")
-//         enemy1[0].remove()
-//         clearInterval(intervalId)
-//     }
-// }, 16);
+function compareGameObjectLocations(){
+    console.log("checking")
+    const enemies = document.querySelectorAll(".enemy")
+    const bullets = document.querySelectorAll(".bullets")
+    for(let i = 0; i < enemies.length; i++){
+        for( let j = 0; j < bullets.length; j++){
+        // checkCollision();
+    }
+   }
+}
+
+function checkCollision() {
+    console.log(" checking ")
+    // const enemy1 = document.getElementsByClassName("enemy")
+    // console.log(bullet.offsetTop + " bullet" + enemy1[0].offsetTop + " enemy")
+    // if(enemy1[0].offsetTop == bullet.offsetTop ) {
+    //     console.log("HIT...")
+    //     enemy1[0].remove()
+    //     clearInterval(intervalId)
+    // }
+}
 
 // move player
 const player = document.getElementById("player")
@@ -75,7 +87,7 @@ function movePlayer(event){
 
 function fire(){
     const player = document.getElementById("player")
-    const bullet = document.getElementById('bullet')
+    const bullet = document.createElement('div')
     bullet.setAttribute("class", "bullet")
     player.insertAdjacentElement("afterbegin", bullet)
     console.log("fired")
