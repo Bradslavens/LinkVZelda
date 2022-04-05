@@ -23,7 +23,7 @@ function start(){
     console.log("triggered")
     enemyIntervalId = setInterval(spawnEnemy, SPAWN_RATE)
     document.addEventListener("keydown", movePlayer)
-    compareObjsIntervalId =  setInterval(compareGameObjectLocations, 3000);
+    compareObjsIntervalId =  setInterval(compareGameObjectLocations);
 }
 
 // // stop spawning enemies
@@ -36,28 +36,23 @@ function stop(){
 
 // check for collision 
 function compareGameObjectLocations(){
-    console.log("checking")
-    let enemies = document.getElementsByClassName("enemy")
+    const enemies = document.getElementsByClassName("enemy")
     const bullets = document.getElementsByClassName("bullet")
-    if(bullets[0] !== undefined){
-        console.log(enemies[0].offsetTop)
+    if(bullets.length > 0 && enemies.length >0){
+        for(let i = 0; i < enemies.length; i++){
+            for( let j = 0; j < bullets.length; j++){
+            checkCollision(enemies[i], bullets[j]);
+            }
+        }
     }
-    // for(let i = 0; i < enemies.length; i++){
-    //     for( let j = 0; j < bullets.length; j++){
-    //     checkCollision(enemies, bullets);
-    // }
-//    }
 }
 
-function checkCollision(enemies = null, bullet = null) {
-    console.log(" checking ")
-    const enemy1 = document.quer
-    // console.log(bullet.offsetTop + " bullet" + enemy1[0].offsetTop + " enemy")
-    // if(enemy1[0].offsetTop == bullet.offsetTop ) {
-    //     console.log("HIT...")
-    //     enemy1[0].remove()
-    //     clearInterval(intervalId)
-    // }
+function checkCollision(enemy = null, bullet = null) {
+    // console.log(`enemy: ${enemy.offsetTop} bullet: ${bullet.offsetTop}`)
+    if(bullet.offsetTop > (enemy.offsetTop - 200) && bullet.offsetLeft > (enemy.offsetLeft - 200) && bullet.offsetLeft < (enemy.offsetLeft + 200)) {
+        console.log("HIT..." + Math.floor(enemy.getBoundingClientRect()["top"]) + " " + Math.floor(bullet.getBoundingClientRect()["top"]) )
+        enemy.remove()
+    }
 }
 
 // move player

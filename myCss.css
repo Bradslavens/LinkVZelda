@@ -9,6 +9,9 @@
 
 .enemy {
     position: absolute;
+    height: 100px;
+    width: 100px;
+    border: solid 4px rebeccapurple;
     top: 0px;
     animation-duration: 5s;
     animation-fill-mode: forwards;
