@@ -1,0 +1,68 @@
+:root {
+    overflow: hidden;
+}
+
+/* enemy styles  */
+#spawner {
+    position: relative;
+}
+
+.enemy {
+    position: absolute;
+    top: 0px;
+    animation-duration: 5s;
+    animation-fill-mode: forwards;
+    animation-name: drop;
+    animation-timing-function: linear;
+}
+
+@keyframes drop {
+    from {
+        top: -10px;
+    }
+
+    to {
+        top: 110vh;
+    }
+    
+}
+
+/* player styles */
+#playerBox {
+    height: 10vh;
+    position: relative;
+    top: 80vh;
+    border: solid 5px green;
+}
+
+#player {
+    position: absolute;
+    height: 5vh;
+    width: 5vh;
+    left: 50vw;
+    transform: translate(-50%);
+    border: solid 10px blue;
+}
+
+.bullet {
+    position: relative;
+    top: 0vh;
+    height: 5px;
+    width: 5px;
+    margin: 0 auto;
+    border: 2px solid red;
+    display: block;
+    animation: fire 1s;
+    animation-fill-mode: forwards;
+    animation-timing-function: linear;
+}
+
+@keyframes fire {
+    from {
+        display: block;
+    }
+
+    to {
+        transform: translate(0%, -100vh);
+    }
+}
