@@ -37,18 +37,21 @@ function stop(){
 // check for collision 
 function compareGameObjectLocations(){
     console.log("checking")
-    const enemies = document.querySelectorAll(".enemy")
-    const bullets = document.querySelectorAll(".bullets")
-    for(let i = 0; i < enemies.length; i++){
-        for( let j = 0; j < bullets.length; j++){
-        // checkCollision();
+    let enemies = document.getElementsByClassName("enemy")
+    const bullets = document.getElementsByClassName("bullet")
+    if(bullets[0] !== undefined){
+        console.log(enemies[0].offsetTop)
     }
-   }
+    // for(let i = 0; i < enemies.length; i++){
+    //     for( let j = 0; j < bullets.length; j++){
+    //     checkCollision(enemies, bullets);
+    // }
+//    }
 }
 
-function checkCollision() {
+function checkCollision(enemies = null, bullet = null) {
     console.log(" checking ")
-    // const enemy1 = document.getElementsByClassName("enemy")
+    const enemy1 = document.quer
     // console.log(bullet.offsetTop + " bullet" + enemy1[0].offsetTop + " enemy")
     // if(enemy1[0].offsetTop == bullet.offsetTop ) {
     //     console.log("HIT...")

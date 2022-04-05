@@ -46,7 +46,7 @@
     margin: 0 auto;
     border: 2px solid red;
     display: block;
-    animation: fire 1s;
+    animation: fire 10s;
     animation-fill-mode: forwards;
     animation-timing-function: linear;
 }
