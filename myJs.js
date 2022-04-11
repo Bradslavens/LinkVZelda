@@ -51,10 +51,11 @@ function moveTarget(targets){
 
 function moveTarget(targets){
     for(let i = 0; i<targets.length; i++){
-        let top = targets[i].style.top
+        let top = getComputedStyle(targets[i], null).getPropertyValue("top")
         const regex = /\d+/
-        let topNumber = top.match(regex)
-        let newTop = topNumber - 50
+        let topNumber = Number(top.match(regex))
+        console.log(`topNumber ${topNumber}`)
+        let newTop = topNumber + 10
         targets[i].style.top = newTop + "px"
     }
 }
