@@ -1,57 +1,95 @@
 // controllers
 const SPAWN_RATE = 3000
-// spawn an enemy in a random location
+// spawn an target in a random location
 const startButton = document.getElementById("start")
 
-function spawnEnemy(){
-    const spawner = document.getElementById("spawner")
-    const enemy = document.createElement('div')
-    const textNode = document.createTextNode("ENEMY")
-    enemy.appendChild(textNode)
-    enemy.setAttribute("class", "enemy")
-    const style = Math.ceil(Math.random() * 100)
-    enemy.style.left = `${style}vw`
-    spawner.insertAdjacentElement("afterbegin", enemy)
-    console.log("spawned")
+const gameManager = function(){
+    spawnTarget()
+    const targets = document.getElementsByClassName("target")
+    const projectiles = document.getElementsByClassName("projectile")
+    compareGameObjectLocations(targets, projectiles)
+        // if not move objects
+    moveTarget(targets)
+    moveProjectile(projectiles)
+    
 }
 
-// spawn enemies 
-let enemyIntervalId = 0
-let compareObjsIntervalId = 0
+function spawnTarget(){
+    const spawner = document.getElementById("targetSpawner")
+    const target = document.createElement('div')
+    target.setAttribute("class", "target")
+    let style = Math.ceil(Math.random() * 90)
+    // console.log(style)
+    target.style.left = `${style}%`
+    spawner.insertAdjacentElement("afterbegin", target)
+}
+
+// start game 
+let gameTimer = 0
+
 function start(){ 
     startButton.setAttribute("disabled", "")
-    console.log("triggered")
-    enemyIntervalId = setInterval(spawnEnemy, SPAWN_RATE)
     document.addEventListener("keydown", movePlayer)
-    compareObjsIntervalId =  setInterval(compareGameObjectLocations);
+    gameTimer = setInterval(gameManager, 1000)    
 }
 
-// // stop spawning enemies
 function stop(){ 
-    clearInterval(enemyIntervalId)
-    clearInterval(compareObjsIntervalId)
+    clearInterval(gameTimer)
     document.removeEventListener("keydown", movePlayer)
     startButton.removeAttribute("disabled")
 }
 
+function moveTarget(targets){
+    for(let i = 0; i<targets.length; i++){
+        let top = targets[i].style.top
+        const regex = /\d+/
+        let topNumber = top.match(regex)
+        let newTop = topNumber + 10
+        targets[i].style.top = newTop + "px"
+    }
+}
+
+function moveTarget(targets){
+    for(let i = 0; i<targets.length; i++){
+        let top = targets[i].style.top
+        const regex = /\d+/
+        let topNumber = top.match(regex)
+        let newTop = topNumber - 50
+        targets[i].style.top = newTop + "px"
+    }
+}
+
+function moveProjectile(projectiles){
+    if(projectiles.length > 0){
+        for(let i = 0; i<projectiles.length; i++){
+            let projectileTop = window.getComputedStyle(projectiles[i]).getPropertyValue("top")
+            // console.log(`projectile top ${projectileTop}`)
+            const regex = /\d+/
+            let nums = projectileTop.match(regex)
+            console.log(`nums ${nums}`)
+            console.log(projectiles[i])
+            projectiles[i].style.top = `${nums[0] - 20}px`
+        }
+    }
+}
+
 // check for collision 
-function compareGameObjectLocations(){
-    const enemies = document.getElementsByClassName("enemy")
-    const bullets = document.getElementsByClassName("bullet")
-    if(bullets.length > 0 && enemies.length >0){
-        for(let i = 0; i < enemies.length; i++){
-            for( let j = 0; j < bullets.length; j++){
-            checkCollision(enemies[i], bullets[j]);
+function compareGameObjectLocations(targets, projectiles){
+    if(projectiles.length > 0 && targets.length >0){
+        for(let i = 0; i < targets.length; i++){
+            for( let j = 0; j < projectiles.length; j++){
+            checkCollision(targets[i], projectiles[j]);
             }
         }
     }
 }
 
-function checkCollision(enemy = null, bullet = null) {
-    // console.log(`enemy: ${enemy.offsetTop} bullet: ${bullet.offsetTop}`)
-    if(bullet.offsetTop > (enemy.offsetTop - 200) && bullet.offsetLeft > (enemy.offsetLeft - 200) && bullet.offsetLeft < (enemy.offsetLeft + 200)) {
-        console.log("HIT..." + Math.floor(enemy.getBoundingClientRect()["top"]) + " " + Math.floor(bullet.getBoundingClientRect()["top"]) )
-        enemy.remove()
+function checkCollision(target = null, projectile = null) {
+    console.log(`target: ${target.offsetTop} projectile: ${projectile.offsetTop}`)
+    if(projectile.offsetTop > (target.offsetTop - 200) && projectile.offsetLeft > (target.offsetLeft - 200) && projectile.offsetLeft < (target.offsetLeft + 200)) {
+        console.log("HIT..." + target.offsetTop + " " + projectile.offsetTop )
+        target.remove()
+        projectile.remove()
     }
 }
 
@@ -84,12 +122,15 @@ function movePlayer(event){
 }
 
 function fire(){
+    const projectile = document.createElement('div')
     const player = document.getElementById("player")
-    const bullet = document.createElement('div')
-    bullet.setAttribute("class", "bullet")
-    player.insertAdjacentElement("afterbegin", bullet)
-    console.log("fired")
+    projectile.setAttribute("class", "projectile")
+    arena.insertAdjacentElement("beforeend", projectile) // afterbegining etc
+    projectile.style.top = window.getComputedStyle(player,null).getPropertyValue("top")
+    projectile.style.left = window.getComputedStyle(player,null).getPropertyValue("left")
 }
+
+spawnTarget()
 
 
 
