@@ -55,8 +55,8 @@
 
 .target {
     position: absolute;
-    height: 5vw;
-    width: 5vw;
+    height: 100px;
+    width: 100px;
     border: solid 4px rebeccapurple;
     background-color: blue;
     top: 0px;
